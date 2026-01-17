@@ -1,6 +1,7 @@
 # Web crawler for extracting UI elements
 
 from playwright.sync_api import sync_playwright
+from features.forced_continuity import detect_forced_continuity
 
 def crawl_page(url: str):
     elements = []
@@ -60,3 +61,7 @@ if __name__ == "__main__":
     data = crawl_page("https://example.com")
     for el in data:
         print(el)
+    
+    print("\n--- Forced Continuity Analysis ---")
+    result = detect_forced_continuity(data)
+    print(result)
