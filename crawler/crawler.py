@@ -3,38 +3,60 @@
 from playwright.sync_api import sync_playwright
 
 def crawl_page(url: str):
+    elements = []
+
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True)
         page = browser.new_page()
         page.goto(url, timeout=60000)
-
-        # Wait for page to load
         page.wait_for_load_state("networkidle")
 
-        # Extract buttons
-        buttons = page.locator("button").all_text_contents()
+        # -------- BUTTONS --------
+        button_locator = page.locator("button")
+        for i in range(button_locator.count()):
+            btn = button_locator.nth(i)
+            elements.append({
+                "type": "button",
+                "text": btn.inner_text().strip(),
+                "visible": btn.is_visible(),
+                "attributes": {
+                    "id": btn.get_attribute("id"),
+                    "class": btn.get_attribute("class")
+                }
+            })
 
-        # Extract links
-        links = page.locator("a").all_text_contents()
+        # -------- LINKS --------
+        link_locator = page.locator("a")
+        for i in range(link_locator.count()):
+            link = link_locator.nth(i)
+            elements.append({
+                "type": "link",
+                "text": link.inner_text().strip(),
+                "visible": link.is_visible(),
+                "attributes": {
+                    "href": link.get_attribute("href")
+                }
+            })
 
-        # Extract input fields
-        inputs = page.locator("input").count()
+        # -------- INPUTS --------
+        input_locator = page.locator("input")
+        for i in range(input_locator.count()):
+            inp = input_locator.nth(i)
+            elements.append({
+                "type": "input",
+                "visible": inp.is_visible(),
+                "attributes": {
+                    "type": inp.get_attribute("type"),
+                    "name": inp.get_attribute("name")
+                }
+            })
 
         browser.close()
 
-        print(f"URL: {url}")
-        print("\nButtons found:")
-        for b in buttons:
-            if b.strip():
-                print("-", b.strip())
-
-        print("\nLinks found:")
-        for l in links:
-            if l.strip():
-                print("-", l.strip())
-
-        print(f"\nNumber of input fields: {inputs}")
+    return elements
 
 
 if __name__ == "__main__":
-    crawl_page("https://example.com")
+    data = crawl_page("https://example.com")
+    for el in data:
+        print(el)
