@@ -9,8 +9,7 @@ def crawl_page(url: str):
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True)
         page = browser.new_page()
-        page.goto(url, timeout=60000)
-        page.wait_for_load_state("networkidle")
+        page.goto(url, timeout=60000, wait_until="domcontentloaded")
 
         # -------- BUTTONS --------
         button_locator = page.locator("button")
@@ -56,9 +55,8 @@ def crawl_page(url: str):
 
     return elements
 
-
 if __name__ == "__main__":
-    data = crawl_page("https://example.com")
+    data = crawl_page("https://www.netflix.com/in/")
     for el in data:
         print(el)
     
