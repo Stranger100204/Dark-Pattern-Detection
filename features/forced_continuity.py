@@ -22,6 +22,14 @@ SUPPORT_KEYWORDS = ["contact", "support", "help", "email", "call"]
 
 PRICING_KEYWORDS = ["pricing", "plan", "billing", "payment", "subscription"]
 
+TRANSPARENCY_KEYWORDS = [
+    "cancel anytime",
+    "cancel at any time",
+    "no commitment",
+    "no cancellation fee",
+    "easy to cancel"
+]
+
 
 # -------------------- UTILITY FUNCTION --------------------
 
@@ -60,7 +68,16 @@ def classify_severity(score):
 
 # -------------------- MAIN DETECTION FUNCTION --------------------
 
-def detect_forced_continuity(elements):
+def detect_forced_continuity(elements, url):
+    ACCOUNT_INDICATORS = ["account", "billing", "subscription", "settings", "dashboard"]
+    MARKETING_INDICATORS = ["pricing", "plans", "premium", "upgrade"]
+
+    page_type = "unknown"
+
+    if any(k in url.lower() for k in ACCOUNT_INDICATORS):
+        page_type = "account"
+    elif any(k in url.lower() for k in MARKETING_INDICATORS):
+        page_type = "marketing"
 
     subscribe_visible = False
     cancel_present = False
@@ -71,6 +88,7 @@ def detect_forced_continuity(elements):
 
     subscription_cta_count = 0
     cancel_cta_count = 0
+    transparency_present = False
 
     for el in elements:
         text = (el.get("text") or "").lower()
@@ -79,6 +97,9 @@ def detect_forced_continuity(elements):
         element_id = (el.get("attributes", {}).get("id") or "").lower()
         element_class = (el.get("attributes", {}).get("class") or "").lower()
 
+        if keyword_match(text, TRANSPARENCY_KEYWORDS):
+            transparency_present = True
+            
         # ---------------- SUBSCRIPTION DETECTION ----------------
         if keyword_match(text, SUBSCRIBE_KEYWORDS):
             subscription_context = True
@@ -137,9 +158,9 @@ def detect_forced_continuity(elements):
             signals["subscription_visible"] = True
             reasons.append("Subscription CTA visible")
 
-        if not cancel_present:
+        if not cancel_present and page_type == "account":
             signals["cancel_not_visible"] = True
-            reasons.append("No cancel option found")
+            reasons.append("No cancel option found on account page")
 
         elif cancel_present and not cancel_visible:
             signals["cancel_hidden"] = True
@@ -165,6 +186,11 @@ def detect_forced_continuity(elements):
     # ---------------- SCORING ----------------
 
     raw_score = calculate_score(signals)
+    # Reduce score if cancellation transparency is clearly stated
+    if transparency_present:
+        raw_score = max(raw_score - 2, 0)
+        reasons.append("Cancellation transparency language detected")
+
     max_score = sum(SIGNAL_WEIGHTS.values())
     risk_percentage = round((raw_score / max_score) * 100, 2)
     severity = classify_severity(raw_score)
@@ -175,6 +201,8 @@ def detect_forced_continuity(elements):
         "risk_percentage": risk_percentage,
         "severity": severity,
         "subscription_context": subscription_context,
+        "page_type": page_type,
+        "max_score": max_score,
         "signals": signals,
         "reasons": reasons,
         "cta_metrics": {
