@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Dark Pattern Detector</title>
+<link rel="stylesheet" href="popup.css">
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Dark Pattern Detector</h1>
+
+<div class="card">
+<div class="row">
+<span class="label">Pattern</span>
+<span id="pattern">Analyzing...</span>
+</div>
+
+<div class="row">
+<span class="label">Severity</span>
+<span id="severity" class="badge">--</span>
+</div>
+
+<div class="row">
+<span class="label">Risk Score</span>
+<span id="risk">--%</span>
+</div>
+</div>
+
+<div class="card">
+<h2>Signals</h2>
+<ul id="signals">
+<li>Analyzing page...</li>
+</ul>
+</div>
+
+<div class="footer">
+Dark Pattern Scanner
+</div>
+
+</div>
+
+<script src="popup.js"></script>
+
+</body>
+</html>
