@@ -48,7 +48,9 @@ chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
             if (data.signals[sig]) {
 
                 const li = document.createElement("li");
-                li.textContent = sig.replace(/_/g, " ");
+                li.textContent =
+                sig.replace(/_/g, " ")
+                    .replace(/\b\w/g, c => c.toUpperCase());
 
                 signalsEl.appendChild(li);
 
