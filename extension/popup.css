@@ -1,62 +1,239 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
 body {
     font-family: Arial, Helvetica, sans-serif;
-    margin: 0;
     background: #0f172a;
     color: #e5e7eb;
-    width: 280px;
+    width: 300px;
 }
 
 .container {
-    padding: 15px;
+    padding: 14px;
 }
 
-h1 {
-    font-size: 18px;
+/* ── HEADER ── */
+.header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
     margin-bottom: 12px;
-    text-align: center;
 }
 
-h2 {
+.header-icon {
+    width: 28px;
+    height: 28px;
+    background: #ea580c;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-size: 14px;
-    margin-bottom: 6px;
+    flex-shrink: 0;
 }
 
+.header-title {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.header-domain {
+    font-size: 11px;
+    color: #64748b;
+}
+
+/* ── CARDS ── */
 .card {
     background: #1e293b;
-    border-radius: 8px;
+    border-radius: 10px;
     padding: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
 }
 
-.row {
+.section-title {
+    font-size: 10px;
+    color: #64748b;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+
+/* ── RISK CARD ── */
+.risk-row {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     margin-bottom: 6px;
 }
 
-.label {
+.pattern-name {
+    font-size: 12px;
     color: #94a3b8;
 }
 
-.badge {
-    padding: 3px 8px;
-    border-radius: 6px;
-    font-size: 12px;
+.risk-percentage {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.bar-bg {
+    height: 5px;
     background: #334155;
+    border-radius: 3px;
 }
 
-ul {
-    padding-left: 18px;
-    margin: 0;
+.bar-fill {
+    height: 5px;
+    border-radius: 3px;
+    transition: width 0.4s ease;
 }
 
-li {
+/* ── SEVERITY BADGE ── */
+.badge {
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    color: white;
+}
+
+.badge-critical {
+    background: #dc2626;
+}
+
+.badge-high {
+    background: #ea580c;
+}
+
+.badge-moderate {
+    background: #ca8a04;
+}
+
+.badge-low {
+    background: #16a34a;
+}
+
+/* ── SEVERITY COLORS (risk % + bar) ── */
+.color-critical {
+    color: #dc2626;
+}
+
+.color-high {
+    color: #ea580c;
+}
+
+.color-moderate {
+    color: #ca8a04;
+}
+
+.color-low {
+    color: #16a34a;
+}
+
+.bar-critical {
+    background: #dc2626;
+}
+
+.bar-high {
+    background: #ea580c;
+}
+
+.bar-moderate {
+    background: #ca8a04;
+}
+
+.bar-low {
+    background: #16a34a;
+}
+
+/* ── SIGNALS ── */
+.signal {
+    display: flex;
+    align-items: flex-start;
+    gap: 7px;
+    margin-bottom: 6px;
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+.signal-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    margin-top: 4px;
+    flex-shrink: 0;
+}
+
+.dot-critical {
+    background: #dc2626;
+}
+
+.dot-high {
+    background: #ea580c;
+}
+
+.dot-moderate {
+    background: #ca8a04;
+}
+
+.dot-low {
+    background: #16a34a;
+}
+
+/* ── ACTIONS ── */
+.action {
+    display: flex;
+    align-items: flex-start;
+    gap: 7px;
+    margin-bottom: 6px;
+    font-size: 12px;
+    color: #94a3b8;
+    line-height: 1.4;
+}
+
+.action-arrow {
+    color: #38bdf8;
+    font-size: 11px;
+    margin-top: 2px;
+    flex-shrink: 0;
+    font-weight: 700;
+}
+
+/* ── SITE MEMORY ── */
+.memory-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
     margin-bottom: 4px;
 }
 
+.memory-val {
+    color: #94a3b8;
+}
+
+.memory-first {
+    font-size: 12px;
+    color: #64748b;
+    font-style: italic;
+}
+
+/* ── NO DETECTION ── */
+.no-detection {
+    font-size: 12px;
+    color: #64748b;
+    text-align: center;
+    padding: 8px 0;
+}
+
+/* ── FOOTER ── */
 .footer {
     text-align: center;
-    font-size: 11px;
-    color: #64748b;
-    margin-top: 5px;
+    font-size: 10px;
+    color: #334155;
+    margin-top: 4px;
 }

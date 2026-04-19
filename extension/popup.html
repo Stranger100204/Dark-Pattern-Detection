@@ -1,48 +1,59 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta charset="UTF-8">
-<title>Dark Pattern Detector</title>
-<link rel="stylesheet" href="popup.css">
+    <meta charset="UTF-8">
+    <title>Dark Pattern Detector</title>
+    <link rel="stylesheet" href="popup.css">
 </head>
 
 <body>
+    <div class="container">
 
-<div class="container">
+        <div class="header">
+            <div class="header-icon">⚠</div>
+            <div>
+                <div class="header-title">Dark Pattern Detector</div>
+                <div class="header-domain" id="header-domain">Analyzing...</div>
+            </div>
+        </div>
 
-<h1>Dark Pattern Detector</h1>
+        <div class="card">
+            <div class="risk-row">
+                <span class="pattern-name" id="pattern">Analyzing...</span>
+                <span id="severity" class="badge">--</span>
+            </div>
+            <div id="risk" class="risk-percentage">--%</div>
+            <div class="bar-bg">
+                <div class="bar-fill" id="bar-fill" style="width:0%"></div>
+            </div>
+        </div>
 
-<div class="card">
-<div class="row">
-<span class="label">Pattern</span>
-<span id="pattern">Analyzing...</span>
-</div>
+        <div class="card">
+            <div class="section-title">What we found</div>
+            <ul id="signals">
+                <li>Analyzing page...</li>
+            </ul>
+        </div>
 
-<div class="row">
-<span class="label">Severity</span>
-<span id="severity" class="badge">--</span>
-</div>
+        <div class="card">
+            <div class="section-title">What you can do</div>
+            <ul id="actions-list">
+                <li>Analyzing...</li>
+            </ul>
+        </div>
 
-<div class="row">
-<span class="label">Risk Score</span>
-<span id="risk">--%</span>
-</div>
-</div>
+        <div class="card">
+            <div class="section-title">Site history</div>
+            <div id="memory-content">
+                <span class="memory-first">Checking...</span>
+            </div>
+        </div>
 
-<div class="card">
-<h2>Signals</h2>
-<ul id="signals">
-<li>Analyzing page...</li>
-</ul>
-</div>
+        <div class="footer">Dark Pattern Scanner</div>
 
-<div class="footer">
-Dark Pattern Scanner
-</div>
-
-</div>
-
-<script src="popup.js"></script>
-
+    </div>
+    <script src="popup.js"></script>
 </body>
+
 </html>
